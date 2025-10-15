@@ -27,14 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
     span.textContent = textNode.textContent;
     li.replaceChild(span, textNode);
 
-    childUl.style.display = 'none';
+    const initialDisplay = getComputedStyle(childUl).display;
 
     span.addEventListener('click', (e) => {
       e.stopPropagation();
 
       const isHidden = getComputedStyle(childUl).display === 'none';
 
-      childUl.style.display = isHidden ? 'block' : 'none';
+      if (isHidden) {
+        childUl.style.display =
+          initialDisplay === 'none' || !initialDisplay ? '' : initialDisplay;
+      } else {
+        childUl.style.display = 'none';
+      }
     });
   });
 });
